@@ -1,20 +1,31 @@
+"""
+Central configuration for the entire backend.
+
+WHY THIS FILE EXISTS:
+Every other module (services, routes, db clients) reads configuration
+from THIS file only. No service should ever call `os.environ` directly.
+This means when we later add OpenAI as an alternative to Ollama, we add
+ONE field here, not go hunting through the codebase.
+"""
+
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-
+    # --- General ---
     app_name: str = "Personal AI Document Reader"
-    version: str = "0.1.0"
     environment: str = "development"
 
     # --- LLM provider switch ---
-    llm_provider: str = "ollama"
+    # This single field is what lets us swap Ollama -> OpenAI later
+    # without touching any service logic (Phase 11 will use this).
+    llm_provider: str = "ollama"  # "ollama" | "openai"
 
     # --- Ollama settings ---
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "llama3"
 
-    # --- OpenAI settings ---
+    # --- OpenAI settings (used only if llm_provider == "openai") ---
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
 
@@ -23,6 +34,11 @@ class Settings(BaseSettings):
 
     # --- Vector DB ---
     chroma_persist_dir: str = "./chroma_data"
+
+    # --- File uploads ---
+    upload_dir: str = "./data/uploads"
+    max_upload_size_mb: int = 25
+    max_pages: int = 500
 
     class Config:
         env_file = ".env"

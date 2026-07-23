@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 
-// This component's ONLY job right now: prove the frontend can reach
-// the backend across ports, through the Vite proxy, hitting our
-// /api/health endpoint from Phase 1. No real UI yet - that's Phase 13.
+
 
 interface HealthResponse {
   status: string

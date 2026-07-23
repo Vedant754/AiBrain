@@ -23,3 +23,25 @@ class HealthResponse(BaseModel):
 class VersionResponse(BaseModel):
     app_name: str
     version: str
+
+class DocumentMetadata(BaseModel):
+    """
+    Describes a successfully LOADED document. Notice this contains
+    nothing about the document's actual text content yet - that's
+    Phase 4's job. This is purely "the file exists, is valid, here's
+    what we know about its shape."
+    """
+
+    document_id: str
+    original_filename: str
+    stored_path: str
+    page_count: int
+    size_bytes: int
+    is_encrypted: bool
+
+
+class UploadResponse(BaseModel):
+    """What the API returns to the frontend after a successful upload."""
+
+    message: str
+    document: DocumentMetadata
