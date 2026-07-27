@@ -39,6 +39,7 @@ class Settings(BaseSettings):
     upload_dir: str = "./data/uploads"
     max_upload_size_mb: int = 25
     max_pages: int = 500
+    extracted_dir: str = "./data/extracted"
 
     class Config:
         env_file = ".env"

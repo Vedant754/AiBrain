@@ -45,3 +45,23 @@ class UploadResponse(BaseModel):
 
     message: str
     document: DocumentMetadata
+
+class ExtractedPage(BaseModel):
+    """Clean text extracted from a single page, with its page number preserved."""
+
+    page_number: int  # 1-indexed - matches how humans refer to pages
+    text: str
+    char_count: int
+
+
+class ExtractedDocument(BaseModel):
+    """
+    Full extraction result for a document. This is the object every
+    later phase (chunking, embedding, retrieval) builds on top of -
+    never the raw PDF again.
+    """
+
+    document_id: str
+    pages: list[ExtractedPage]
+    total_characters: int
+    stripped_boilerplate_lines: list[str]  # transparency: what we removed, and why

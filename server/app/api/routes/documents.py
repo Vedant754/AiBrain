@@ -10,6 +10,8 @@ now actually paying off: we can unit-test load_pdf() with zero HTTP
 machinery involved at all.
 """
 
+import os
+
 from fastapi import APIRouter, HTTPException, UploadFile
 
 from app.core.exceptions import (
@@ -20,7 +22,10 @@ from app.core.exceptions import (
     TooManyPagesError,
 )
 from app.models.schemas import UploadResponse
+from app.models.schemas import ExtractedDocument
 from app.services.document_loader import load_pdf
+from app.core.config import settings
+from app.services import document_loader, extraction
 
 router = APIRouter()
 
@@ -44,3 +49,28 @@ async def upload_document(file: UploadFile) -> UploadResponse:
         message="Document uploaded and validated successfully.",
         document=metadata,
     )
+
+@router.post("/documents/{document_id}/extract", response_model=ExtractedDocument)
+async def extract_document_text(document_id: str) -> ExtractedDocument:
+    """
+    Extracts clean, page-aware text from a previously uploaded document.
+
+    Split from upload deliberately (per Phase 4's load-vs-extract
+    distinction) - a client could re-trigger extraction (e.g. after we
+    improve the cleaning logic) without re-uploading the file.
+    """
+    try:
+        pdf_path = document_loader.get_pdf_path(document_id)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+
+    result = extraction.extract_document(pdf_path, document_id=document_id)
+
+    # Persist the extraction result so Phase 5 (chunking) can load it
+    # without re-running extraction every time.
+    os.makedirs(settings.extracted_dir, exist_ok=True)
+    out_path = os.path.join(settings.extracted_dir, f"{document_id}.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(result.model_dump_json(indent=2))
+
+    return result

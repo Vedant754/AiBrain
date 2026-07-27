@@ -64,6 +64,21 @@ def _generate_safe_path(original_filename: str) -> tuple[str, str]:
     stored_path = os.path.join(settings.upload_dir, f"{document_id}.pdf")
     return document_id, stored_path
 
+def get_pdf_path(document_id: str) -> str:
+    """
+    Resolves a document_id to its stored file path.
+
+    WHY THIS FUNCTION EXISTS (rather than callers building the path
+    themselves): the storage naming CONVENTION is an implementation
+    detail of this module. If we ever change how/where files are
+    stored (e.g. move to S3 in Phase 16+), only this function changes -
+    every caller elsewhere in the app keeps working unmodified.
+    """
+    path = os.path.join(settings.upload_dir, f"{document_id}.pdf")
+    if not os.path.exists(path):
+        raise FileNotFoundError(f"No stored document found for id: {document_id}")
+    return path
+
 
 def load_pdf(file_bytes: bytes, original_filename: str) -> DocumentMetadata:
     """
