@@ -23,9 +23,10 @@ from app.core.exceptions import (
 )
 from app.models.schemas import UploadResponse
 from app.models.schemas import ExtractedDocument
+from app.models.schemas import ChunkingResult
 from app.services.document_loader import load_pdf
 from app.core.config import settings
-from app.services import document_loader, extraction
+from app.services import document_loader, extraction, chunking
 
 router = APIRouter()
 
@@ -70,6 +71,34 @@ async def extract_document_text(document_id: str) -> ExtractedDocument:
     # without re-running extraction every time.
     os.makedirs(settings.extracted_dir, exist_ok=True)
     out_path = os.path.join(settings.extracted_dir, f"{document_id}.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(result.model_dump_json(indent=2))
+
+    return result
+
+@router.post("/documents/{document_id}/chunk", response_model=ChunkingResult)
+async def chunk_document_text(document_id: str) -> ChunkingResult:
+    """
+    Chunks a previously extracted document.
+
+    Split from extraction (same reasoning as extraction being split
+    from upload): chunk_size/overlap are tunable, and we want to be
+    able to re-chunk without re-extracting from the PDF.
+    """
+    extracted_path = os.path.join(settings.extracted_dir, f"{document_id}.json")
+    if not os.path.exists(extracted_path):
+        raise HTTPException(
+            status_code=404,
+            detail=f"No extraction found for document_id {document_id}. Run /extract first.",
+        )
+
+    with open(extracted_path, encoding="utf-8") as f:
+        extracted_document = ExtractedDocument.model_validate_json(f.read())
+
+    result = chunking.chunk_document(extracted_document)
+
+    os.makedirs(settings.chunks_dir, exist_ok=True)
+    out_path = os.path.join(settings.chunks_dir, f"{document_id}.json")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(result.model_dump_json(indent=2))
 

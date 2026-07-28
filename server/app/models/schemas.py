@@ -64,4 +64,28 @@ class ExtractedDocument(BaseModel):
     document_id: str
     pages: list[ExtractedPage]
     total_characters: int
-    stripped_boilerplate_lines: list[str]  # transparency: what we removed, and why
+    stripped_boilerplate_lines: list[str]
+
+class Chunk(BaseModel):
+    """
+    One retrievable unit of text. This is what eventually gets embedded
+    (Phase 6) and stored in the vector DB (Phase 7). Page attribution
+    is preserved so retrieved chunks remain citable back to a source
+    page, even though chunk boundaries don't align with page boundaries.
+    """
+
+    chunk_id: str
+    document_id: str
+    chunk_index: int  # 0-indexed position among this document's chunks
+    text: str
+    char_count: int
+    start_page: int  # first page this chunk's text overlaps
+    end_page: int  # last page this chunk's text overlaps (== start_page if it doesn't span pages)
+
+
+class ChunkingResult(BaseModel):
+    document_id: str
+    chunks: list[Chunk]
+    total_chunks: int
+    chunk_size: int
+    chunk_overlap: int

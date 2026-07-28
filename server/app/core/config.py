@@ -41,6 +41,11 @@ class Settings(BaseSettings):
     max_pages: int = 500
     extracted_dir: str = "./data/extracted"
 
+    # --- Chunking ---
+    chunk_size: int = 800
+    chunk_overlap: int = 150
+    chunks_dir: str = "./data/chunks"
+
     class Config:
         env_file = ".env"
 

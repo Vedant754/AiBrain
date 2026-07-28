@@ -1,0 +1,305 @@
+{
+  "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+  "chunks": [
+    {
+      "chunk_id": "5fd18c6f-d0e9-4995-b0ed-f88299892104",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 0,
+      "text": "Autonomous Aerial System for Precision Crop Monitoring\nName of Applicant \nAddress of Applicant \nNationality \nVedant Amit Bhagwat \n105/First \nFloor, \nAshwamedh \nSociety, \nD.G.Mahajani \nRoad, \nNear \nFatima \nHigh \nSchool, \nSewree, \nMumbai, 400015\nIndian\nGandhar Suhas Kulkarni B-3, Minal CHS, T.M.C.\nIndian\nRoad, \nNear \nNitin \nCompany, \nPanchpakhadi, \nThane \n(W), 400602\nDev Oza \nBhavan's Campus, 801, \nOld D N Nagar, Munshi \nNagar, Andheri West, \nMumbai, \nMaharashtra \n400058\nIndian\nKiran Talele \nBhavan's Campus, 801, \nOld D N Nagar, Munshi \nNagar, Andheri West, \nMumbai, \nMaharashtra \n400058\nIndian",
+      "char_count": 598,
+      "start_page": 1,
+      "end_page": 1
+    },
+    {
+      "chunk_id": "9a87aa6a-8521-4edd-91be-fae948e5433e",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 1,
+      "text": "Chapter 1\nIntroduction\nIn the realm of modern agriculture, crop health monitoring and precision agriculture have emerged as crucial components for optimizing yields, reducing\nresource usage, and ensuring sustainable farming practices. Traditional methods of monitoring crop health and managing agricultural operations often rely\non manual inspections and subjective assessments, leading to inefficiencies, inaccuracies, and increased operational costs.\nTo address these challenges and usher in a new era of smart agriculture,\nwe propose the development of an autonomous aerial system for precision crop\nmonitoring. The main objective is to deploy an innovative drone system that\nautonomously scans farmland, captures high-resolution images and videos using",
+      "char_count": 756,
+      "start_page": 2,
+      "end_page": 2
+    },
+    {
+      "chunk_id": "65704a2c-dbaa-412c-abee-d5f34aac0a8f",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 2,
+      "text": "autonomously scans farmland, captures high-resolution images and videos using\na gimbal-supported camera, and processes this data to generate a comprehensive report on the health of the crops.\nOur approach involves leveraging advancements in drone technology, image\nprocessing algorithms, and data analytics to revolutionize crop monitoring and\nagricultural management practices.\nThe project involves the custom design of a 5kg drone, meticulously considering our specific requirements, environmental conditions, and other relevant\nfactors. We aimed to design a drone that could withstand varying weather conditions, efficiently cover large agricultural areas, and seamlessly integrate with\nour image processing and data analysis systems. Additionally, to gain valuable",
+      "char_count": 768,
+      "start_page": 2,
+      "end_page": 2
+    },
+    {
+      "chunk_id": "4ea3a615-3f67-4a36-84bf-2d9c4bca4bf2",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 3,
+      "text": "our image processing and data analysis systems. Additionally, to gain valuable\nhardware implementation experience and validate our design choices, we began\nby assembling a smaller 2kg drone and testing its capabilities, including live\nvideo streaming.\nIn the following sections of this report, we will discuss in detail the design and\nimplementation of our autonomous aerial system. Additionally, we will explore\nthe potential applications of our system, the challenges encountered during the\ndevelopment process, and the strategies employed to overcome them.\n1",
+      "char_count": 561,
+      "start_page": 2,
+      "end_page": 2
+    },
+    {
+      "chunk_id": "d7d32e0f-a5a3-41b0-a664-5d9c0233061c",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 4,
+      "text": "Chapter 2\nProject Objectives\nThe project \"Autonomous Aerial System for Precision Crop Monitoring\" aims\nto achieve the following objectives:\n1) Develop a Custom-Designed 5kg Autonomous Drone: This objective focuses on the design and construction of a 5kg drone specifically tailored\nfor our agricultural monitoring needs. The design considerations will include\nfactors like payload capacity, flight time, maneuverability, and stability in varying weather conditions.\n2) Integrate High-Resolution Camera with Gimbal Stabilization:\nThis objective involves integrating a high-resolution camera with a gimbal stabilization system onto the custom-designed drone. The gimbal will ensure stable\nand focused image capture during flight, even in turbulent conditions.",
+      "char_count": 757,
+      "start_page": 3,
+      "end_page": 3
+    },
+    {
+      "chunk_id": "2d5a9fb0-4a09-4e89-a9d2-d588c5e103d6",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 5,
+      "text": "and focused image capture during flight, even in turbulent conditions.\n3) Develop Autonomous Flight Path Planning: This objective focuses\non developing software algorithms for autonomous flight path planning for the\ndrone. The software will consider factors like field size, shape, and desired image\noverlap to generate efficient flight paths for comprehensive data collection.\n4) Implement Image Processing Algorithms for Crop Health Assessment: This objective involves developing and integrating image processing\nalgorithms at the ground station. These algorithms will analyze captured images from the drone, identifying features such as color variations, leaf size and\nshape, and potential disease or pest damage.\n5) Generate Comprehensive Crop Health Reports: This objective",
+      "char_count": 778,
+      "start_page": 3,
+      "end_page": 3
+    },
+    {
+      "chunk_id": "aaec9024-d93a-4c3b-960f-3c3fff688cf1",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 6,
+      "text": "shape, and potential disease or pest damage.\n5) Generate Comprehensive Crop Health Reports: This objective\nfocuses on developing software functionalities to analyze the results from the\nimage processing algorithms. This analysis will be used to generate detailed\nreports on the health of the crops across the entire field, highlighting potential\nproblem areas.\n6) Evaluate System Performance and Accuracy: This objective involves testing and evaluating the overall performance and accuracy of the developed system. This includes testing the drone’s flight stability, image capture\n2",
+      "char_count": 582,
+      "start_page": 3,
+      "end_page": 3
+    },
+    {
+      "chunk_id": "9f2edfc6-47ed-47c0-9bc4-94b3bda54a64",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 7,
+      "text": "quality, and the accuracy of the generated crop health reports compared to\nground-truth data.\n7) Demonstrate Feasibility of Precision Agriculture Applications:\nThis objective involves utilizing the developed system in a simulated or realworld agricultural setting. The project will demonstrate how the generated crop\nhealth reports can be used for targeted resource applications, such as fertilizer\nor pesticide use, promoting precision agriculture practices.\n8) Analyze Cost-Effectiveness and Scalability Potential: This objective focuses on analyzing the cost-effectiveness and scalability potential of the\ndeveloped system. This will involve evaluating the hardware and software costs,\nas well as assessing the system’s feasibility for implementation across various",
+      "char_count": 768,
+      "start_page": 4,
+      "end_page": 4
+    },
+    {
+      "chunk_id": "4cdc9d11-76c9-4c96-8229-173dda53fa48",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 8,
+      "text": "as well as assessing the system’s feasibility for implementation across various\nfarm sizes and agricultural environments.\nBy achieving these objectives, this project aims to present a viable and efficient solution for crop health monitoring using an intelligent aerial system.\nThis technology has the potential to revolutionize agricultural practices, promote sustainable resource management, and contribute to improved crop yields\nand overall agricultural productivity.\n3",
+      "char_count": 472,
+      "start_page": 4,
+      "end_page": 4
+    },
+    {
+      "chunk_id": "9c05c209-d18a-4978-8180-f06abbdb0e1c",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 9,
+      "text": "Chapter 3\nSystem Design\nFigure 3.1: Block Diagram of the System\nDrone Platform Overview\nThe Drone Platform serves as the main operational unit in the field. It houses\nseveral key components essential for its autonomous and remote-controlled operations in agricultural monitoring and analysis.\nOn-Board Systems\n• Flight Controller: Serves as the central processing unit for the drone,\nmanaging flight patterns, stabilization, and responses to navigation com4",
+      "char_count": 457,
+      "start_page": 5,
+      "end_page": 5
+    },
+    {
+      "chunk_id": "4e4158e3-6a05-4488-8b99-12fb6dfa4742",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 10,
+      "text": "mands based on data received from the GPS Module and the IMU (Inertial\nMeasurement Unit).\n• GPS Module: Provides real-time geographical positioning data to the\nFlight Controller, enabling precise location tracking necessary for targeted\nagricultural surveying.\n• IMU (Inertial Measurement Unit): Feeds motion and orientation\ndata to the Flight Controller, enhancing flight stability and accuracy.\n• Camera: Captures high-resolution images of the agricultural land. These\nimages are crucial for monitoring crop health and other land attributes.\n• Jetson (On-Board Computer): Processes the images captured by the\nCamera in real-time, utilizing advanced algorithms for image analysis and\ndata extraction relevant to agricultural assessments.",
+      "char_count": 738,
+      "start_page": 6,
+      "end_page": 6
+    },
+    {
+      "chunk_id": "70d992b8-959a-4803-8ef1-dd5701e84fa6",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 11,
+      "text": "Camera in real-time, utilizing advanced algorithms for image analysis and\ndata extraction relevant to agricultural assessments.\n• Telemetry System: Facilitates bi-directional communication between\nthe drone and the Ground Station, transmitting operational data and receiving control commands.\nData Link Connectivity\nConnects the on-board Telemetry System and Jetson to the Ground Station.\nIt is responsible for the real-time transmission of processed data and telemetry\ninformation to the Ground Station and receiving control commands from it.\nGround Station Block Diagram Explanation\nGround Station Overview\nThe Ground Station acts as the command and control center for the Drone\nPlatform, equipped with systems for data reception, control interface, and data\nanalysis.\nComponents",
+      "char_count": 781,
+      "start_page": 6,
+      "end_page": 6
+    },
+    {
+      "chunk_id": "4d188f7b-4b13-4db9-8591-fd388435e23b",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 12,
+      "text": "Platform, equipped with systems for data reception, control interface, and data\nanalysis.\nComponents\n• Control Interface: Allows operators to send control commands to the\nDrone via the Telemetry System.\nIt provides a user interface for live\ninteraction with the Drone’s flight operations and camera control.\n5",
+      "char_count": 309,
+      "start_page": 6,
+      "end_page": 6
+    },
+    {
+      "chunk_id": "c5a18f5f-8a4c-4471-83b6-d91b4e9537e2",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 13,
+      "text": "• Data Reception: Receives processed data and raw data streams from\nthe Drone via the Data Link. This includes both image data processed by\nthe Jetson and telemetry data from the drone’s operations.\n• Analysis Software: Analyzes received data for further agricultural insights. The software processes the data to produce actionable information,\nsuch as crop health indicators, which can inform farming decisions.\nCommunication and Data Flow\n• From Drone to Ground Station:\n– The Jetson processes image data and sends the processed information to the Ground Station via the Data Link, facilitating real-time\ndecision-making.\n– The Telemetry System sends operational data to the Ground Station,\nensuring that the drone’s status and activities are monitored continuously.",
+      "char_count": 768,
+      "start_page": 7,
+      "end_page": 7
+    },
+    {
+      "chunk_id": "98eb80a9-ca65-446a-94fe-bcf0a9bbbe15",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 14,
+      "text": "– The Telemetry System sends operational data to the Ground Station,\nensuring that the drone’s status and activities are monitored continuously.\n• From Ground Station to Drone:\n– Control commands are transmitted from the Control Interface of the\nGround Station to the Drone’s Telemetry System via the Data Link,\nenabling remote piloting and real-time adjustments to drone operations and camera settings.\n6",
+      "char_count": 405,
+      "start_page": 7,
+      "end_page": 7
+    },
+    {
+      "chunk_id": "18edba4b-a463-4a81-aa24-b9192bc295c8",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 15,
+      "text": "Drone Design\nA critical factor in achieving successful drone flight is ensuring sufficient lift to\novercome the drone’s weight. This is quantified by the thrust-to-weight ratio\n(TWR). A TWR greater than 1 indicates that the drone’s total thrust exceeds\nits weight, allowing it to ascend and maneuver. The higher the TWR, the\ngreater the drone’s acceleration, payload capacity, and ability to handle wind\ngusts.\nIn this project, we have chosen a TWR of 2:1. This means the total thrust\ngenerated by the drone’s motors must be double its weight for optimal performance. This approach provides several advantages:\nEfficient Takeoff and Climb:\nA TWR of 2:1 ensures the drone can efficiently ascend with adequate reserve\npower for maneuvering and climbing. Stable Flight: This ratio allows for better",
+      "char_count": 795,
+      "start_page": 8,
+      "end_page": 8
+    },
+    {
+      "chunk_id": "f60cce09-914a-47bb-ba47-d6cf4e7e0b9e",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 16,
+      "text": "power for maneuvering and climbing. Stable Flight: This ratio allows for better\ncontrol and stability during flight, particularly in windy conditions. Payload\nCapacity: The additional thrust provides headroom for carrying payloads like\ncameras or sensors without compromising flight performance. To achieve this\ndesired TWR, we employed the following calculation process:\nDetermine Drone Weight:\nThe total weight of the drone, including all components (frame, motors, batteries, electronics, etc.), is measured in kilograms (kg). In our case, the total\nweight is 5kg. Calculate Required Thrust: Multiply the drone’s weight by the\ndesired TWR (2:1). This calculation yields the total thrust required for the\ndrone to achieve the targeted performance, which in this case is 5kg * 2 =",
+      "char_count": 781,
+      "start_page": 8,
+      "end_page": 8
+    },
+    {
+      "chunk_id": "5c1cdae5-45e7-46ad-b1fe-46063ffb8afc",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 17,
+      "text": "drone to achieve the targeted performance, which in this case is 5kg * 2 =\n10kg. By following these steps and selecting components that collectively generate the required 10kg of thrust, we ensure the drone possesses the necessary\npower for efficient flight and payload capacity for our crop health monitoring\napplication.\n7",
+      "char_count": 324,
+      "start_page": 8,
+      "end_page": 8
+    },
+    {
+      "chunk_id": "c9c2da82-e5fa-423f-a986-8d2344157375",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 18,
+      "text": "Chapter 4\nMathematical Model\n4.1\nCoordinate System and Notations\n• Body Frame (B):\n– This coordinate system is fixed to the drone. It rotates with the drone\nand moves as the drone moves.\n– The forces and torques generated by the drone’s motors are expressed\nin this frame.\n– Example: The thrust generated by the motors acts along the z-axis of\nthe body frame.\n• Inertial Frame (I):\n– This coordinate system is fixed to the Earth.\n– Used for analyzing the drone’s position, velocity, and trajectory in the\nreal world.\n– Example: The effect of gravity is defined in the inertial frame, pointing\ndown in the Earth’s z-direction.\nNotations\n• Position in the inertial frame: p = [x, y, z]T\n• Velocity in the inertial frame: v = dp\ndt = [vx, vy, vz]T\n• Acceleration in the inertial frame: a = dv\ndt",
+      "char_count": 792,
+      "start_page": 9,
+      "end_page": 9
+    },
+    {
+      "chunk_id": "bf156b37-9161-45fe-a931-1563591c7000",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 19,
+      "text": "• Velocity in the inertial frame: v = dp\ndt = [vx, vy, vz]T\n• Acceleration in the inertial frame: a = dv\ndt\n• Angular velocity in the body frame: ω = [ωx, ωy, ωz]T\n• Orientation: Represented by Euler angles ϕ (roll), θ (pitch), and ψ (yaw).\n8",
+      "char_count": 242,
+      "start_page": 9,
+      "end_page": 9
+    },
+    {
+      "chunk_id": "99820968-dc6d-4adb-abb9-d07ff57b8789",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 20,
+      "text": "• Forces in the body frame: F = [Fx, Fy, Fz]T\n• Torques in the body frame: τ = [τϕ, τθ, τψ]T\n4.2\nTranslational Dynamics\nForce Balance\nNewton’s second law governs the translational motion:\nma = Fthrust + Fgravity + Fexternal\n• Thrust Force (Fthrust): Generated by the propellers and acts in the\nbody frame’s z-axis:\n\n\n0\n0\nFT\n\nFthrust = RBI\n\nwhere FT is the total thrust, and RBI is the rotation matrix from the body\nframe to the inertial frame.\n• Gravitational Force (Fgravity): Acts in the inertial z-direction:\n\n\n\n0\n0\n−mg\nFgravity =\n\n• External Forces (Fexternal): Includes aerodynamic drag or wind disturbances.\nRotation Matrix\nThe rotation matrix RBI is given by:\n\n\ncψcθ cψsθsϕ −sψcϕ cψsθcϕ + sψsϕ\nsψcθ sψsθsϕ + cψcϕ sψsθcϕ −cψsϕ\n−sθ\ncθsϕ\ncθcϕ\n\nRBI =\n",
+      "char_count": 766,
+      "start_page": 10,
+      "end_page": 10
+    },
+    {
+      "chunk_id": "2aae95aa-f583-44c6-85e2-e8ff9319c5af",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 21,
+      "text": "Rotation Matrix\nThe rotation matrix RBI is given by:\n\n\ncψcθ cψsθsϕ −sψcϕ cψsθcϕ + sψsϕ\nsψcθ sψsθsϕ + cψcϕ sψsθcϕ −cψsϕ\n−sθ\ncθsϕ\ncθcϕ\n\nRBI =\n\nwhere c and s denote the cosine and sine of the respective angles.\n9",
+      "char_count": 213,
+      "start_page": 10,
+      "end_page": 10
+    },
+    {
+      "chunk_id": "5f0795df-df33-4f68-82ce-e52445706b6e",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 22,
+      "text": "Translational Dynamics in the Inertial Frame\nThe translational dynamics in the inertial frame are:\n\n\n0\n0\nFT\n\n\n\n0\n0\n−mg\n\nma = RBI\n+\n\nDividing by m, the acceleration becomes:\n\n\n0\n0\nFT\n\n\n\n0\n0\n−g\n\na = RBI\n+\n\nm\n4.3\nRotational Dynamics\nAngular Motion\nEuler’s rotational equations describe the angular motion:\nI ˙ω + ω × (Iω) = τ\nwhere:\n• I is the moment of inertia matrix:\n\n\nIx\n0\n0\n0\nIy\n0\n0\n0\nIz\n\nI =\n\n• ω = [ωϕ, ωθ, ωψ]T is the angular velocity vector.\nTorques\nTorques are generated by motor thrusts:\n\n\nτϕ\nτθ\nτψ\n\nτ =\n\nwhere:\n• Roll torque: τϕ = b(T2 −T4)\n• Pitch torque: τθ = b(T3 −T1)\n• Yaw torque: τψ = d(T1 −T2 + T3 −T4)\nHere, b is the arm length, and d is the yaw control factor.\n10",
+      "char_count": 705,
+      "start_page": 11,
+      "end_page": 11
+    },
+    {
+      "chunk_id": "57c0be58-4f7e-435c-bdae-402645660743",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 23,
+      "text": "Angular Acceleration\nThe angular acceleration is given by:\n˙ω = I−1 (τ −ω × (Iω))\n4.4\nCombined System of Equations\nTranslational Motion\ndp\ndt = v,\ndv\ndt = a\nRotational Motion\ndω\ndt = I−1 (τ −ω × (Iω))\nOrientation Dynamics\nThe Euler angle rates are related to angular velocity:\n\n\n˙ϕ\n˙θ\n˙ψ\n\n\n\n1\nsin ϕ tan θ\ncos ϕ tan θ\n0\ncos ϕ\n−sin ϕ\n0 sin ϕ/ cos θ cos ϕ/ cos θ\n\n\n\nωx\nωy\nωz\n\n=\n\n\n4.5\nState-Space Representation\nDefine the state vector:\n\np\nv\nω\nϕ\n\n\n\nx =\nwhere ϕ = [ϕ, θ, ψ]T. The combined system of equations becomes:\n\nv\na\n˙ω\n\n\n\n\ndx\ndt =\n\n\n1\nsin ϕ tan θ\ncos ϕ tan θ\n0\ncos ϕ\n−sin ϕ\n0 sin ϕ/ cos θ cos ϕ/ cos θ\nω\n11",
+      "char_count": 648,
+      "start_page": 12,
+      "end_page": 12
+    },
+    {
+      "chunk_id": "51d86f2c-ce84-4ffa-a00f-4681e134a0ce",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 24,
+      "text": "4.6\nControl Inputs\n1. Total thrust (FT):\nFT = T1 + T2 + T3 + T4\n2. Torques (τϕ, τθ, τψ): Defined by individual motor thrusts as described in\nSection 4.2.\n4.7\nSimulation Results and Analysis\n4.7.1\nPosition Over Time (X, Y, Z)\nFigure 4.1: Position of the drone over time in X, Y, and Z directions.\nDescription:\nThis graph depicts the trajectory of the drone in the three axes over time: X,\nY , and Z. These subplots plot the trajectory of the drone as it travels in each\ndirection through space.\nAnalysis:\n• The subplot for the X-axis is sinusoidal, meaning the drone is oscillating\nlaterally over time.\n12",
+      "char_count": 604,
+      "start_page": 13,
+      "end_page": 13
+    },
+    {
+      "chunk_id": "56663341-3f59-4670-9a38-07c18a3b3dc0",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 25,
+      "text": "• The Y-axis subplot is sinusoidal but with a phase shift compared with\nX-axis, as it reflects the composite nature of the trajectory of the drone in\n3D space.\n• The Z-axis subplot shows a steady increase, which corresponds to the\ndrone ascending continuously during the simulation. This upward trend is\nconsistent with the applied thrust overcoming gravity.\n4.7.2\n3D Trajectory\nFigure 4.2: 3D Trajectory of the drone showing its path through successive waypoints.\nDescription:\nIn this 3D plot, the spatial path that the drone takes as it traverses between suc13",
+      "char_count": 562,
+      "start_page": 14,
+      "end_page": 14
+    },
+    {
+      "chunk_id": "ececda4d-f20d-45a9-90d8-4a255f986cb9",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 26,
+      "text": "cessive waypoints is demonstrated. The red points show the waypoint specified\nand the actual flight path of the drone in terms of a blue curve.\nAnalysis:\n• The drone, without any hitch, crosses near all waypoints in a smooth\ntrajectory.\n• Deviations from a straight line between waypoints indicate responsiveness\nof the drone to both control system and aerodynamic effects are such that\nsmooth transitions between navigation targets occur.\n• It has curves and changes in slope that describe dynamic adjustments in\nthe control inputs necessary to establish stability and reach the target\nwaypoints.\n4.7.3\nCumulative Energy Consumption\nFigure 4.3: Cumulative energy consumption of the drone during the simulation.\nDescription:",
+      "char_count": 724,
+      "start_page": 15,
+      "end_page": 15
+    },
+    {
+      "chunk_id": "fb4a90ac-1eca-4652-8b86-192dca99c319",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 27,
+      "text": "waypoints.\n4.7.3\nCumulative Energy Consumption\nFigure 4.3: Cumulative energy consumption of the drone during the simulation.\nDescription:\nThis graph represents the cumulative energy consumption of the drone during\nthe simulation. Energy is calculated as a function of thrust force and velocity\nover time.\n14",
+      "char_count": 307,
+      "start_page": 15,
+      "end_page": 15
+    },
+    {
+      "chunk_id": "5f75e213-bb2f-4727-b4ce-c255cc5dab6a",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 28,
+      "text": "Analysis:\n• The curve of energy consumption is not linear, with a progression that\nincreases slowly at the start and more sharply towards the end of the\nsimulation.\n• Higher demands in energy are indicated with a steeper slope due to increased thrust when ascending or attaining higher speeds, for example.\n• Increasing energy consumption overall supports the fact that the drone\nremains constantly in climb and moves through all waypoints.\n15",
+      "char_count": 443,
+      "start_page": 16,
+      "end_page": 16
+    },
+    {
+      "chunk_id": "4208de61-6836-47d8-9858-277170ab85e5",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 29,
+      "text": "Chapter 5\nSimulation\nWe have used various software to ensure the proper working of the drone. Here\nis a list of software used:\nAutodesk Fusion 360: Using the Autodesk Fusion 360 software, we have\ndesigned the chassis of the drone. We have added the main frame, motors,\nrotors, propellers, propeller guards, camera etc. We have also kept slots for the\nbattery and other sensors.\nFigure 5.1: Fusion360 Drone Design Image 1\n16\n\nFigure 5.2: Fusion360 Drone Design Image 2\nSimulink: We have used Simulink to simulate the flight pattern of the drone\nin various environmental conditions.\n17\n\nFigure 5.3: Simulink Drone Simulation Image 1\nFigure 5.4: Simulink Drone Simulation Image 2\n18",
+      "char_count": 679,
+      "start_page": 17,
+      "end_page": 19
+    },
+    {
+      "chunk_id": "66faefe4-929c-4171-9d24-7650eba8c3f4",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 30,
+      "text": "Figure 5.3: Simulink Drone Simulation Image 1\nFigure 5.4: Simulink Drone Simulation Image 2\n18\n\nChapter 6\nDrone Images\nThis section displays images of the drone during setup and in the field.\nFigure 6.1: Drone - Initial Stage\n19\n\nFigure 6.2: Drone - Field testing\n20",
+      "char_count": 266,
+      "start_page": 19,
+      "end_page": 21
+    },
+    {
+      "chunk_id": "39939796-eebd-425c-a063-ea7a1b8a072c",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 31,
+      "text": "Chapter 7\nConclusion\nThis project has laid the groundwork for the development of an autonomous\naerial system for precision crop monitoring. Through the design of a customized\ndrone and initial testing with a smaller prototype, we have gained valuable insights into the hardware and software considerations necessary for this project.\nThe future development of this system will focus on integrating the 5kg\ndrone with the gimbal-stabilized camera. Following this, the image processing\nalgorithms for crop health assessment will be implemented on the ground station\ncomputer.\nThe project has the potential to revolutionize agricultural practices.\nBy\nproviding real-time data on crop health, this system can empower farmers to",
+      "char_count": 723,
+      "start_page": 22,
+      "end_page": 22
+    },
+    {
+      "chunk_id": "a6f2b763-3961-4a18-b7c3-fa08c2eb82ae",
+      "document_id": "00d2a0eb-39ca-49e8-93e8-5e25454023a6",
+      "chunk_index": 32,
+      "text": "The project has the potential to revolutionize agricultural practices.\nBy\nproviding real-time data on crop health, this system can empower farmers to\nmake informed decisions regarding irrigation, fertilization, and pest control.\nThis translates to increased crop yields, improved resource management, and\nultimately, a more sustainable agricultural industry.\nFurthermore, the core functionalities of this system can be adapted for various applications beyond agriculture. Potential applications include environmental monitoring, search and rescue operations, and infrastructure inspections. With further development and refinement, this intelligent aerial system\nholds immense promise for enhancing efficiency and data acquisition across a\nwide range of industries.\n21",
+      "char_count": 768,
+      "start_page": 22,
+      "end_page": 22
+    }
+  ],
+  "total_chunks": 33,
+  "chunk_size": 800,
+  "chunk_overlap": 150
+}
