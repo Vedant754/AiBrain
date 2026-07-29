@@ -32,3 +32,14 @@ class FileTooLargeError(DocumentLoadError):
 
 class TooManyPagesError(DocumentLoadError):
     """Raised when the uploaded PDF exceeds the configured page limit."""
+
+class EmbeddingError(Exception):
+    """Base class for embedding failures."""
+
+
+class EmbeddingProviderConnectionError(EmbeddingError):
+    """Raised when the embedding provider (e.g. Ollama) can't be reached."""
+
+
+class EmbeddingProviderResponseError(EmbeddingError):
+    """Raised when the provider responds, but with an unexpected/invalid shape."""

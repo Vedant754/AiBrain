@@ -89,3 +89,23 @@ class ChunkingResult(BaseModel):
     total_chunks: int
     chunk_size: int
     chunk_overlap: int
+
+class EmbeddedChunk(BaseModel):
+    """A Chunk plus its embedding vector - the unit that goes into the vector DB (Phase 7)."""
+
+    chunk_id: str
+    document_id: str
+    chunk_index: int
+    text: str
+    start_page: int
+    end_page: int
+    embedding: list[float]
+    embedding_model: str
+
+
+class EmbeddingResult(BaseModel):
+    document_id: str
+    embedded_chunks: list[EmbeddedChunk]
+    embedding_dimension: int
+    embedding_model: str
+    provider: str

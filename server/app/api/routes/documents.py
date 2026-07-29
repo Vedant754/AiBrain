@@ -20,13 +20,18 @@ from app.core.exceptions import (
     FileTooLargeError,
     InvalidFileTypeError,
     TooManyPagesError,
+    EmbeddingError,
+    EmbeddingProviderConnectionError,
+    EmbeddingProviderResponseError,
+
 )
 from app.models.schemas import UploadResponse
 from app.models.schemas import ExtractedDocument
 from app.models.schemas import ChunkingResult
+from app.models.schemas import EmbeddingResult, EmbeddedChunk
 from app.services.document_loader import load_pdf
 from app.core.config import settings
-from app.services import document_loader, extraction, chunking
+from app.services import document_loader, extraction, chunking, embedding
 
 router = APIRouter()
 
@@ -99,6 +104,58 @@ async def chunk_document_text(document_id: str) -> ChunkingResult:
 
     os.makedirs(settings.chunks_dir, exist_ok=True)
     out_path = os.path.join(settings.chunks_dir, f"{document_id}.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        f.write(result.model_dump_json(indent=2))
+
+    return result
+
+@router.post("/documents/{document_id}/embed", response_model=EmbeddingResult)
+async def embed_document_chunks(document_id: str) -> EmbeddingResult:
+    """Embeds a previously chunked document's text and persists the vectors."""
+    chunks_path = os.path.join(settings.chunks_dir, f"{document_id}.json")
+    if not os.path.exists(chunks_path):
+        raise HTTPException(
+            status_code=404,
+            detail=f"No chunks found for document_id {document_id}. Run /chunk first.",
+        )
+
+    with open(chunks_path, encoding="utf-8") as f:
+        chunking_result = ChunkingResult.model_validate_json(f.read())
+
+    provider = embedding.get_embedding_provider()
+    texts = [c.text for c in chunking_result.chunks]
+
+    try:
+        vectors = embedding.embed_document_chunks(texts, provider)
+    except EmbeddingProviderConnectionError as e:
+        raise HTTPException(status_code=503, detail=str(e)) from e
+    except EmbeddingProviderResponseError as e:
+        raise HTTPException(status_code=502, detail=str(e)) from e
+
+    embedded_chunks = [
+        EmbeddedChunk(
+            chunk_id=c.chunk_id,
+            document_id=c.document_id,
+            chunk_index=c.chunk_index,
+            text=c.text,
+            start_page=c.start_page,
+            end_page=c.end_page,
+            embedding=vec,
+            embedding_model=provider.model_name,
+        )
+        for c, vec in zip(chunking_result.chunks, vectors, strict=True)
+    ]
+
+    result = EmbeddingResult(
+        document_id=document_id,
+        embedded_chunks=embedded_chunks,
+        embedding_dimension=len(vectors[0]) if vectors else 0,
+        embedding_model=provider.model_name,
+        provider=settings.embedding_provider,
+    )
+
+    os.makedirs(settings.embeddings_dir, exist_ok=True)
+    out_path = os.path.join(settings.embeddings_dir, f"{document_id}.json")
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(result.model_dump_json(indent=2))
 

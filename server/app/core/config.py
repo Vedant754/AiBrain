@@ -31,6 +31,9 @@ class Settings(BaseSettings):
 
     # --- Embedding model ---
     embedding_model: str = "nomic-embed-text"
+    embedding_provider: str = "ollama"  # "ollama" | "openai"
+    embedding_batch_size: int = 16
+    embeddings_dir: str = "./data/embeddings"
 
     # --- Vector DB ---
     chroma_persist_dir: str = "./chroma_data"
