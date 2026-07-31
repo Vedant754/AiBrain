@@ -23,12 +23,15 @@ from app.core.exceptions import (
     EmbeddingError,
     EmbeddingProviderConnectionError,
     EmbeddingProviderResponseError,
+    VectorStoreError,
 
 )
 from app.models.schemas import UploadResponse
 from app.models.schemas import ExtractedDocument
 from app.models.schemas import ChunkingResult
 from app.models.schemas import EmbeddingResult, EmbeddedChunk
+from app.models.schemas import StoreResult
+from app.db import vector_store
 from app.services.document_loader import load_pdf
 from app.core.config import settings
 from app.services import document_loader, extraction, chunking, embedding
@@ -160,3 +163,32 @@ async def embed_document_chunks(document_id: str) -> EmbeddingResult:
         f.write(result.model_dump_json(indent=2))
 
     return result
+
+@router.post("/documents/{document_id}/store", response_model=StoreResult)
+async def store_document_embeddings(document_id: str) -> StoreResult:
+    """
+    Loads a previously computed EmbeddingResult and upserts it into the
+    shared ChromaDB collection. This is the final step turning a raw
+    PDF into something actually searchable.
+    """
+    embeddings_path = os.path.join(settings.embeddings_dir, f"{document_id}.json")
+    if not os.path.exists(embeddings_path):
+        raise HTTPException(
+            status_code=404,
+            detail=f"No embeddings found for document_id {document_id}. Run /embed first.",
+        )
+
+    with open(embeddings_path, encoding="utf-8") as f:
+        embedding_result = EmbeddingResult.model_validate_json(f.read())
+
+    try:
+        count = vector_store.upsert_embedding_result(embedding_result)
+    except VectorStoreError as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+    return StoreResult(
+        document_id=document_id,
+        chunks_stored=count,
+        collection_name=settings.chroma_collection_name,
+    )
+

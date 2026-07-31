@@ -109,3 +109,8 @@ class EmbeddingResult(BaseModel):
     embedding_dimension: int
     embedding_model: str
     provider: str
+
+class StoreResult(BaseModel):
+    document_id: str
+    chunks_stored: int
+    collection_name: str

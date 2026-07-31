@@ -35,8 +35,9 @@ class Settings(BaseSettings):
     embedding_batch_size: int = 16
     embeddings_dir: str = "./data/embeddings"
 
-    # --- Vector DB ---
+     # --- Vector DB ---
     chroma_persist_dir: str = "./chroma_data"
+    chroma_collection_name: str = "documents"
 
     # --- File uploads ---
     upload_dir: str = "./data/uploads"
