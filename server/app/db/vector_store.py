@@ -88,11 +88,22 @@ def upsert_embedding_result(result: EmbeddingResult) -> int:
     return len(result.embedded_chunks)
 
 
-def smoke_test_query(query_embedding: list[float], top_k: int = 3) -> dict:
+def query_collection(
+    query_embedding: list[float],
+    top_k: int = 5,
+    where: dict | None = None,
+) -> dict:
     """
-    Minimal query used ONLY to prove storage/indexing works this phase.
-    Real query design (top_k tuning, filters, score interpretation)
-    is Phase 8's subject - don't build retrieval logic on this yet.
+    Real query entry point (Phase 7 only smoke-tested this; Phase 8
+    formalizes it). Returns Chroma's raw response shape - similarity
+    conversion and threshold filtering happen one layer up, in
+    services/search.py, keeping this module focused purely on being
+    a thin, honest wrapper around Chroma itself.
     """
     collection = get_collection()
-    return collection.query(query_embeddings=[query_embedding], n_results=top_k)
+    return collection.query(
+        query_embeddings=[query_embedding],
+        n_results=top_k,
+        where=where,
+        include=["documents", "metadatas", "distances"],
+    )

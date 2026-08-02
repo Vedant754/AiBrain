@@ -114,3 +114,24 @@ class StoreResult(BaseModel):
     document_id: str
     chunks_stored: int
     collection_name: str
+
+class SearchRequest(BaseModel):
+    query: str
+    top_k: int = 5
+    document_id: str | None = None  # if set, restrict search to one document
+    similarity_threshold: float | None = None  # e.g. 0.3 - discard weaker matches
+
+
+class SearchResult(BaseModel):
+    chunk_id: str
+    document_id: str
+    text: str
+    start_page: int
+    end_page: int
+    similarity: float  # 1.0 = identical direction, -1.0 = opposite; NOT a probability
+
+
+class SearchResponse(BaseModel):
+    query: str
+    results: list[SearchResult]
+    count: int
