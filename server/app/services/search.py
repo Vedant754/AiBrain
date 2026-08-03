@@ -53,6 +53,7 @@ def similarity_search(
             SearchResult(
                 chunk_id=chunk_id,
                 document_id=metadata["document_id"],
+                chunk_index=metadata["chunk_index"],
                 text=text,
                 start_page=metadata["start_page"],
                 end_page=metadata["end_page"],

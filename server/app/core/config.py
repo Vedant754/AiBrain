@@ -50,6 +50,11 @@ class Settings(BaseSettings):
     chunk_overlap: int = 150
     chunks_dir: str = "./data/chunks"
 
+     # --- Retrieval ---
+    max_context_chars: int = 4000
+    expand_neighbors: bool = True
+    default_similarity_threshold: float = 0.2
+
     class Config:
         env_file = ".env"
 

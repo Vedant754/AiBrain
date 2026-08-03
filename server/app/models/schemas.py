@@ -125,6 +125,7 @@ class SearchRequest(BaseModel):
 class SearchResult(BaseModel):
     chunk_id: str
     document_id: str
+    chunk_index: int
     text: str
     start_page: int
     end_page: int
@@ -135,3 +136,21 @@ class SearchResponse(BaseModel):
     query: str
     results: list[SearchResult]
     count: int
+
+class RetrievedChunk(BaseModel):
+    chunk_id: str
+    document_id: str
+    chunk_index: int
+    text: str
+    start_page: int
+    end_page: int
+    similarity: float | None  # None for chunks pulled in purely via neighbor expansion
+    is_neighbor: bool  # True if included for context, not because it matched the query
+
+
+class RetrievalResponse(BaseModel):
+    query: str
+    chunks: list[RetrievedChunk]
+    has_relevant_context: bool
+    total_characters: int
+    truncated: bool  # True if the character budget cut off additional relevant chunks

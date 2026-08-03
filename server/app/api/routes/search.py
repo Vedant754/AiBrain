@@ -11,8 +11,8 @@ than being bolted onto documents.py.
 
 from fastapi import APIRouter
 
-from app.models.schemas import SearchRequest, SearchResponse
-from app.services import search
+from app.models.schemas import SearchRequest, SearchResponse, RetrievalResponse
+from app.services import search, retrieval
 
 router = APIRouter()
 
@@ -26,3 +26,18 @@ async def search_documents(request: SearchRequest) -> SearchResponse:
         similarity_threshold=request.similarity_threshold,
     )
     return SearchResponse(query=request.query, results=results, count=len(results))
+
+@router.post("/retrieve", response_model=RetrievalResponse)
+async def retrieve(request: SearchRequest) -> RetrievalResponse:
+    """
+    The full retrieval pipeline: search + neighbor expansion + reading
+    order + character budget. This is what Phase 10 (prompt
+    construction) will actually consume - /search stays available for
+    debugging raw similarity results in isolation.
+    """
+    return retrieval.retrieve_context(
+        query=request.query,
+        top_k=request.top_k,
+        document_id=request.document_id,
+        similarity_threshold=request.similarity_threshold,
+    )

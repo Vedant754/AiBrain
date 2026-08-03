@@ -88,6 +88,28 @@ def upsert_embedding_result(result: EmbeddingResult) -> int:
     return len(result.embedded_chunks)
 
 
+def get_chunks_by_index(document_id: str, chunk_indices: list[int]) -> dict:
+    """
+    Exact metadata-based lookup - NOT a similarity search. Used for
+    neighbor expansion (Phase 9): once we know chunk_index=7 scored
+    well, this fetches chunk_index 6 and 8 directly, by their known
+    position, with zero notion of "similarity" involved.
+
+    This is Chroma's .get() (metadata filter) as opposed to .query()
+    (vector similarity) - a distinction worth keeping straight.
+    """
+    collection = get_collection()
+    return collection.get(
+        where={
+            "$and": [
+                {"document_id": {"$eq": document_id}},
+                {"chunk_index": {"$in": chunk_indices}},
+            ]
+        },
+        include=["documents", "metadatas"],
+    )
+
+
 def query_collection(
     query_embedding: list[float],
     top_k: int = 5,

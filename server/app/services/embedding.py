@@ -139,3 +139,13 @@ def embed_document_chunks(
         all_embeddings.extend(batch_embeddings)
 
     return all_embeddings
+
+def embed_query(query_text: str, provider: EmbeddingProvider) -> list[float]:
+    """
+    Embeds a single user QUESTION for searching - uses QUERY_PREFIX,
+    not DOCUMENT_PREFIX. This asymmetry (introduced conceptually in
+    Phase 6) is what lets nomic-embed-text align questions and answers
+    that are worded very differently from each other.
+    """
+    result = provider.embed_batch([QUERY_PREFIX + query_text])
+    return result[0]
