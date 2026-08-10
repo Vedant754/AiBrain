@@ -11,8 +11,8 @@ than being bolted onto documents.py.
 
 from fastapi import APIRouter
 
-from app.models.schemas import SearchRequest, SearchResponse, RetrievalResponse
-from app.services import search, retrieval
+from app.models.schemas import SearchRequest, SearchResponse, RetrievalResponse, PromptBundle
+from app.services import search, retrieval, prompt_builder
 
 router = APIRouter()
 
@@ -41,3 +41,20 @@ async def retrieve(request: SearchRequest) -> RetrievalResponse:
         document_id=request.document_id,
         similarity_threshold=request.similarity_threshold,
     )
+
+@router.post("/prompt/preview", response_model=PromptBundle)
+async def preview_prompt(request: SearchRequest) -> PromptBundle:
+    """
+    DEBUG/DEVELOPMENT ENDPOINT: builds and returns the exact prompt
+    that would be sent to an LLM, WITHOUT calling any LLM (Phase 11
+    wires up actual generation). Being able to inspect the literal
+    prompt text - not just trust it's "probably fine" - is essential
+    for debugging retrieval-to-prompt issues before blaming the model.
+    """
+    retrieval_result = retrieval.retrieve_context(
+        query=request.query,
+        top_k=request.top_k,
+        document_id=request.document_id,
+        similarity_threshold=request.similarity_threshold,
+    )
+    return prompt_builder.build_rag_prompt(request.query, retrieval_result)

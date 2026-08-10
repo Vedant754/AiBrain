@@ -154,3 +154,15 @@ class RetrievalResponse(BaseModel):
     has_relevant_context: bool
     total_characters: int
     truncated: bool  # True if the character budget cut off additional relevant chunks
+
+class PromptBundle(BaseModel):
+    """
+    The final, ready-to-send prompt - Phase 11 sends this to an LLM
+    verbatim, no further assembly needed. Separated into system/user
+    because that's how essentially every modern chat-completion API
+    (Ollama, OpenAI) expects messages structured.
+    """
+
+    system_prompt: str
+    user_prompt: str
+    has_context: bool  # mirrors RetrievalResponse.has_relevant_context, for transparency
