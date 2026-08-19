@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     # This single field is what lets us swap Ollama -> OpenAI later
     # without touching any service logic (Phase 11 will use this).
     llm_provider: str = "ollama"  # "ollama" | "openai"
+    llm_temperature: float = 0.1  # low = prioritize faithfulness over creativity
+    llm_max_tokens: int = 1024
 
     # --- Ollama settings ---
     ollama_base_url: str = "http://localhost:11434"

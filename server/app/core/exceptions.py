@@ -48,3 +48,14 @@ class EmbeddingProviderResponseError(EmbeddingError):
 
 class VectorStoreError(Exception):
     """Base class for vector store failures."""
+
+class LLMError(Exception):
+    """Base class for LLM generation failures."""
+
+
+class LLMProviderConnectionError(LLMError):
+    """Raised when the LLM provider (e.g. Ollama) can't be reached."""
+
+
+class LLMProviderResponseError(LLMError):
+    """Raised when the provider responds, but with an unexpected/invalid shape."""

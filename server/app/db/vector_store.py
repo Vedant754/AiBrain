@@ -51,6 +51,21 @@ def get_collection():
         metadata={"hnsw:space": "cosine"},
     )
 
+def delete_by_document() -> None:
+    """
+    Removes ALL vectors for a document_id, regardless of their chunk_ids.
+
+    WHY THIS EXISTS: our chunk_ids are randomly generated per chunking
+    run (see chunking.py), not deterministic from document_id+chunk_index.
+    That means re-processing the same document produces a FRESH set of
+    IDs every time - upsert() alone cannot know the old ones should be
+    replaced, since matching only happens on identical IDs. Without this
+    explicit delete step, reprocessing silently leaves orphaned stale
+    chunks in the collection, polluting future searches for that document.
+    """
+    collection = get_collection()
+    collection.delete()
+
 
 def upsert_embedding_result(result: EmbeddingResult) -> int:
     """
@@ -66,6 +81,7 @@ def upsert_embedding_result(result: EmbeddingResult) -> int:
         return 0
 
     collection = get_collection()
+    delete_by_document()
 
     try:
         collection.upsert(

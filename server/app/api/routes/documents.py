@@ -26,15 +26,15 @@ from app.core.exceptions import (
     VectorStoreError,
 
 )
-from app.models.schemas import UploadResponse
+from app.models.schemas import IngestionResult, UploadResponse
 from app.models.schemas import ExtractedDocument
 from app.models.schemas import ChunkingResult
 from app.models.schemas import EmbeddingResult, EmbeddedChunk
-from app.models.schemas import StoreResult
+from app.models.schemas import StoreResult,IngestionResult
 from app.db import vector_store
 from app.services.document_loader import load_pdf
 from app.core.config import settings
-from app.services import document_loader, extraction, chunking, embedding
+from app.services import document_loader, extraction, chunking, embedding, ingestion_pipeline
 
 router = APIRouter()
 
@@ -58,6 +58,39 @@ async def upload_document(file: UploadFile) -> UploadResponse:
         message="Document uploaded and validated successfully.",
         document=metadata,
     )
+
+@router.post("/documents/process", response_model=IngestionResult)
+async def process_document(file: UploadFile) -> IngestionResult:
+    """
+    The full ingestion pipeline in one call: load -> extract -> chunk ->
+    embed -> store. This is what the frontend (Phase 13) actually calls.
+    The individual /upload, /extract, /chunk, /embed, /store endpoints
+    remain available for isolating a problem to a specific stage -
+    exactly the same relationship /api/ask has to /search, /retrieve,
+    /prompt/preview, /generate (Phase 12).
+    """
+    file_bytes = await file.read()
+
+    try:
+        result = ingestion_pipeline.process_document(
+            file_bytes, original_filename=file.filename or "unnamed.pdf"
+        )
+    except FileTooLargeError as e:
+        raise HTTPException(status_code=413, detail=str(e)) from e
+    except InvalidFileTypeError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except CorruptedFileError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except EncryptedFileError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
+    except EmbeddingProviderConnectionError as e:
+        raise HTTPException(status_code=503, detail=str(e)) from e
+    except EmbeddingProviderResponseError as e:
+        raise HTTPException(status_code=502, detail=str(e)) from e
+    except VectorStoreError as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+    return result
 
 @router.post("/documents/{document_id}/extract", response_model=ExtractedDocument)
 async def extract_document_text(document_id: str) -> ExtractedDocument:

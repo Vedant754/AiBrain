@@ -166,3 +166,47 @@ class PromptBundle(BaseModel):
     system_prompt: str
     user_prompt: str
     has_context: bool  # mirrors RetrievalResponse.has_relevant_context, for transparency
+
+class GenerationResult(BaseModel):
+    """The LLM's final answer, plus which provider/model actually produced it."""
+
+    text: str
+    model: str
+    provider: str
+
+class Source(BaseModel):
+    """
+    A citation, built from OUR OWN retrieval metadata - never parsed
+    from the LLM's text. See Phase 12 Step 1 for why this distinction
+    matters: the model's inline citations are a readability nicety,
+    not a reliable data source.
+    """
+
+    document_id: str
+    pages: list[int]  # sorted, deduplicated page numbers actually used
+
+
+class AskResponse(BaseModel):
+    query: str
+    answer: str
+    sources: list[Source]
+    has_context: bool
+    model: str
+    provider: str
+
+
+class IngestionResult(BaseModel):
+    """
+    Result of the full ingestion pipeline - upload through vector
+    storage, in one call. Mirrors AskResponse's role on the query side:
+    a single clean response the frontend actually consumes, while the
+    individual per-stage endpoints remain available for debugging.
+    """
+
+    document_id: str
+    original_filename: str
+    page_count: int
+    total_chunks: int
+    chunks_stored: int
+    embedding_model: str
+    message: str

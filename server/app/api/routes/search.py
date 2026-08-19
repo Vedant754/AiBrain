@@ -9,10 +9,13 @@ the request body). That's why this lives in its own router rather
 than being bolted onto documents.py.
 """
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
-from app.models.schemas import SearchRequest, SearchResponse, RetrievalResponse, PromptBundle
+from app.models.schemas import SearchRequest, SearchResponse, RetrievalResponse, PromptBundle,GenerationResult
 from app.services import search, retrieval, prompt_builder
+from app.core.exceptions import LLMProviderConnectionError, LLMProviderResponseError
+from app.core.config import settings
+from app.services import llm
 
 router = APIRouter()
 
@@ -58,3 +61,24 @@ async def preview_prompt(request: SearchRequest) -> PromptBundle:
         similarity_threshold=request.similarity_threshold,
     )
     return prompt_builder.build_rag_prompt(request.query, retrieval_result)
+
+@router.post("/generate", response_model=GenerationResult)
+async def generate_from_prompt(bundle: PromptBundle) -> GenerationResult:
+    """
+    DEBUG/DEVELOPMENT ENDPOINT (Phase 11 scope): takes an already-built
+    PromptBundle (e.g. from /prompt/preview) and calls the configured
+    LLM provider. Deliberately standalone, NOT chained to retrieval
+    here - Phase 12 wires search -> retrieve -> prompt -> generate
+    into one single end-to-end endpoint.
+    """
+    provider = llm.get_llm_provider()
+    try:
+        text = provider.generate(bundle.system_prompt, bundle.user_prompt)
+    except LLMProviderConnectionError as e:
+        raise HTTPException(status_code=503, detail=str(e)) from e
+    except LLMProviderResponseError as e:
+        raise HTTPException(status_code=502, detail=str(e)) from e
+
+    return GenerationResult(
+        text=text, model=provider.model_name, provider=settings.llm_provider
+    )
